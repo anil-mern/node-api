@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Node template with controller, services with mongo db",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anil-bomma/node-api.git"
+  },
+  "keywords": [
+    "node",
+    "npm"
+  ],
+  "author": "Anil Bomma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anil-bomma/node-api/issues"
+  },
+  "homepage": "https://github.com/anil-bomma/node-api#readme"
+}
