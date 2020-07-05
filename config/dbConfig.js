@@ -21,12 +21,18 @@ const connectionOptions = {
   family: 4, // Use IPv4, skip trying IPv6
 };
 
-// conect to mongo database
+// Use mongoose to connect & create a default connection
 let initConnection = async () => {
-  await mongoose.connect(process.env.DB_CONNECT, connectionOptions, () => {
-    logger.debug("connected to db");
-  });
-  return mongoose.connection;
+  try {
+    logger.info("connecting to mongo database...");
+    await mongoose.connect(process.env.DB_CONNECT, connectionOptions);
+    logger.debug("connect to db");
+    return mongoose.connection;
+  } catch (err) {
+    logger.error("error connect to db, err: " + err);
+    throw err;
+  }
 };
 
+// Get the default connection
 module.exports.initConnection = initConnection;

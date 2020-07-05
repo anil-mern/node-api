@@ -4,6 +4,7 @@ const path = require("path");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const noCache = require("nocache");
 
 const config = require("./config/config");
 const logger = require("./utils/logger");
@@ -41,7 +42,7 @@ app.use(
 app.use(helmet.xssFilter());
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
-app.use(helmet.noCache());
+app.use(noCache());
 app.disable("x-powered-by");
 
 // for cross platfoorm communication
@@ -120,7 +121,8 @@ dbConnect
     global.db = dbConnection;
   })
   .catch((err) => {
-    logger.emerg("error while connecting to database: ", err);
+    logger.error("error while connecting to database: ", err);
+    process.exit();
   });
 
 app.listen(process.env.API_PORT, () => {
