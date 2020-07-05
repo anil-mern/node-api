@@ -82,6 +82,7 @@ app.use(function (req, res, next) {
 let isWhitelist = (req) => {
   return (
     req.path.indexOf("/favicon.ico") > -1 ||
+    req.path.indexOf("/health") > -1 ||
     req.path.indexOf("/auth/") > -1 ||
     req.path.indexOf("/api/auth/") > -1 ||
     req.path.indexOf("/api/auth/forgot") > -1 ||
@@ -103,8 +104,20 @@ app.use(function (req, res, next) {
     logger.debug("public route");
     next();
   } else {
-    res.status(401).send("Not authorized to access this resource");
+    res.status(401).send({
+      status: 401,
+      message: "Not authorized to access this resource",
+    });
   }
+});
+
+app.get("/health", function (req, res) {
+  res.send({
+    status: 200,
+    message:
+      "node-api is up and running and database is " +
+      (global.db ? "connected" : "not connected"),
+  });
 });
 
 // bind all routes to express app
