@@ -116,7 +116,7 @@ app.get("/health", function (req, res) {
     status: 200,
     message:
       "node-api is up and running and database is " +
-      (global.db ? "connected" : "not connected"),
+      (global.db ? "connected" : "NOT connected"),
   });
 });
 
@@ -140,4 +140,5 @@ dbConnect
 
 app.listen(process.env.API_PORT, () => {
   logger.info(`api server up, running at: ${process.env.API_PORT}`);
+  logger.info(`api server up, running at: http://localhost:${process.env.API_PORT}/health`);
 });

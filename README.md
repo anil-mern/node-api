@@ -5,4 +5,6 @@ This is the default node api template built with express. It has routes, control
 npm install
 
 # start server
-node serve.js
+npm run dev (for dev mode)
+npm run start
+
