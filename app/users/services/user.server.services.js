@@ -4,7 +4,6 @@
  * Module dependencies.
  */
 
-const async = require("async");
 const bcrypt = require("bcrypt");
 
 const logger = require("../../../utils/logger");
@@ -12,8 +11,9 @@ const util = require("../../../utils/util");
 const dsMgr = require("../../../utils/dsMgr");
 
 const User = require("../modals/user.server.modal");
+const { login } = require("../controllers/user.server.controller");
 
-module.exports.saveUser = async (userData) => {
+let saveUser = async (userData) => {
   try {
     await util.validateReqBody(userData, [
       "email",
@@ -36,10 +36,41 @@ module.exports.saveUser = async (userData) => {
     });
     user.userId = user._id;
 
-    return await dsMgr.save(user);
+    let res = await dsMgr.save(user);
+    console.log("----res ", res);
+    return res;
+  } catch (ex) {
+    logger.error("saveUser function has exception occured " + ex);
+    console.log("---", ex.toString());
+    ex.status = 401;
+    ex.message = "==" + ex.toString();
+    throw ex;
+  }
+};
+
+let loginUser = async (userData) => {
+  try {
+    await util.validateReqBody(userData, ["email", "password"]);
+
+    let query = {
+      email: userData.email,
+    };
+
+    let user = await dsMgr.findOne(User, query, "password");
+
+    // Load hash from your password DB.
+    const validatePassword = await bcrypt.compare(
+      userData.password,
+      user.password
+    );
+
+    return validatePassword + "";
   } catch (ex) {
     logger.error("saveUser function has exception occured" + ex);
     ex.status = 400;
     throw ex;
   }
 };
+
+module.exports.saveUser = saveUser;
+module.exports.loginUser = loginUser;
