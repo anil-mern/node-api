@@ -8,3 +8,8 @@ npm install
 npm run dev (for dev mode)
 npm run start
 
+# request params, query, body validation
+
+```
+npm i indicative
+```
