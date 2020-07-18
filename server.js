@@ -88,7 +88,8 @@ let isWhitelist = (req) => {
     req.path.indexOf("/api/auth/forgot") > -1 ||
     req.path.indexOf("/api/auth/reset") > -1 ||
     req.path.indexOf("/api/public") > -1 ||
-    req.path.indexOf("/api/user/register") > -1
+    req.path.indexOf("/api/user/register") > -1 ||
+    req.path.indexOf("/api/user/login") > -1
   );
 };
 
